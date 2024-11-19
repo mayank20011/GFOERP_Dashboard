@@ -1,5 +1,6 @@
 import React from "react";
 import dataArray from "./Salesdataraw.js";
+import { useState, useEffect } from "react";
 
 const tableHeading = [
   "Client Name",
@@ -20,28 +21,61 @@ const tableHeading = [
   "Dahi lite (400grm)",
   "Dahi lite (160grm)",
   "Plain Chach (300ml)",
-  "Masala Chach (300)"
+  "Masala Chach (300)",
 ];
 
 function Table() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("https://gfoerp-mern-api.vercel.app/Sales/")
+      .then((response) => {
+        console.log(response.data.data);
+        setData(response.data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <table className="table-fixed">
       <thead>
         <tr>
           {tableHeading.map((data) => (
-            <th className="p-1 border border-black text-sm" key={data} style={{"minWidth":"100px"}}>{data}</th>
+            <th
+              className="p-1 border border-black text-sm"
+              key={data}
+              style={{ minWidth: "100px" }}
+            >
+              {data}
+            </th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {dataArray.map((row,index) => {
+        {data.map((row, index) => {
           const objKeys = Object.keys(row);
-          return(
-          <tr key={index} className={ index%2==0? 'text-center bg-slate-200':'text-center'}>
-            {objKeys.map((key)=>(
-                <td key={key} className='p-1 border text-sm border-black'>{row[key]}</td>
-            ))}
-          </tr>
+          return (
+            <tr
+              key={index}
+              className={
+                index % 2 == 0 ? "text-center bg-slate-200" : "text-center"
+              }
+            >
+              {objKeys.map((key,index) => (
+                <td key={key} className="p-1 border text-sm border-black">
+                  {row[key]}
+                </td>
+              ))}
+            </tr>
           );
         })}
       </tbody>

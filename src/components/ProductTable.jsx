@@ -24,7 +24,7 @@ function Table() {
         .then((response) => {
           setLoading(false);
           setData(response.data.data);
-          console.log("API response data: ", response.data.data);
+          // console.log("API response data: ", response.data.data);
         })
         .catch((err) => {
           setLoading(false);
@@ -39,17 +39,6 @@ function Table() {
     return () => clearInterval(interval);
   }, []);
 
-  // useEffect(()=>{
-  //   axios.get("https://gfoerp-mern-api.vercel.app/Purchase/")
-  //   .then((response)=>
-  //     {
-  //       setLoading(false);
-  //       setData(response.data.data);
-  //     })
-  //   .catch((err)=>{
-  //     console.error("Error fetching data:", err);
-  //   });
-  // },[]);
 
   if (loading) {
     return <div>Loading...</div>;
