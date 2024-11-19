@@ -17,22 +17,28 @@ function Table() {
   const [dataa, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  let response;
-
-  setInterval(() => {
-    useEffect(() => {
+  useEffect(() => {
+    const fetchData = () => {
       axios
         .get("https://gfoerp-mern-api.vercel.app/Purchase/")
         .then((response) => {
           setLoading(false);
           setData(response.data.data);
+          console.log("API response data: ", response.data.data);
         })
         .catch((err) => {
+          setLoading(false);
           console.error("Error fetching data:", err);
         });
-    }, []);
-  }, 10000);
-  
+    };
+    // Fetch data initially
+    fetchData();
+    // Set up interval to fetch data every 10 seconds
+    const interval = setInterval(fetchData, 10000);
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+
   // useEffect(()=>{
   //   axios.get("https://gfoerp-mern-api.vercel.app/Purchase/")
   //   .then((response)=>
