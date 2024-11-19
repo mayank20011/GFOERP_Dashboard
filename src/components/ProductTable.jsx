@@ -26,6 +26,9 @@ let response;
         setData(response.data);
         setLoading(false);
         console.log(`Api response is: ${response} and data is ${response.data} and dataa variable is ${dataa}`);
+        console.log(response);
+        console.log(response.data);
+        console.log(dataa);
       })
     .catch((err)=>{
       console.error("Error fetching data:", err);
