@@ -51,8 +51,9 @@ let response;
           const objKeys = Object.keys(row);
           return (
             <tr key={index} className={index % 2 === 0 ? 'text-center bg-slate-200' : 'text-center'}>
-              {objKeys.map((key) => (
-                <td key={key} className='p-4 border border-black'>{row[key]}</td>
+              {objKeys.map((key,index) => (
+                (index===0 || index===10)? "":<td key={key} className='p-4 border border-black'>{row[key]}</td>
+                // <td key={key} className='p-4 border border-black'>{row[key]}</td>
               ))}
             </tr>
           );
