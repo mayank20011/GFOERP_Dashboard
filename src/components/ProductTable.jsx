@@ -17,19 +17,33 @@ function Table() {
   const [dataa, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-let response;
+  let response;
 
-  useEffect(()=>{
-    axios.get("https://gfoerp-mern-api.vercel.app/Purchase/")
-    .then((response)=>
-      {
-        setLoading(false);
-        setData(response.data.data);
-      })
-    .catch((err)=>{
-      console.error("Error fetching data:", err);
-    });
-  },[]);
+  setInterval(() => {
+    useEffect(() => {
+      axios
+        .get("https://gfoerp-mern-api.vercel.app/Purchase/")
+        .then((response) => {
+          setLoading(false);
+          setData(response.data.data);
+        })
+        .catch((err) => {
+          console.error("Error fetching data:", err);
+        });
+    }, []);
+  }, 10000);
+  
+  // useEffect(()=>{
+  //   axios.get("https://gfoerp-mern-api.vercel.app/Purchase/")
+  //   .then((response)=>
+  //     {
+  //       setLoading(false);
+  //       setData(response.data.data);
+  //     })
+  //   .catch((err)=>{
+  //     console.error("Error fetching data:", err);
+  //   });
+  // },[]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -50,11 +64,21 @@ let response;
         {dataa.map((row, index) => {
           const objKeys = Object.keys(row);
           return (
-            <tr key={index} className={index % 2 === 0 ? 'text-center bg-slate-200' : 'text-center'}>
-              {objKeys.map((key,index) => (
-                (index===0 || index===10)? "":<td key={key} className='p-4 border border-black'>{row[key]}</td>
-                // <td key={key} className='p-4 border border-black'>{row[key]}</td>
-              ))}
+            <tr
+              key={index}
+              className={
+                index % 2 === 0 ? "text-center bg-slate-200" : "text-center"
+              }
+            >
+              {objKeys.map((key, index) =>
+                index === 0 || index === 10 ? (
+                  ""
+                ) : (
+                  <td key={key} className="p-4 border border-black">
+                    {row[key]}
+                  </td>
+                )
+              )}
             </tr>
           );
         })}
@@ -64,4 +88,3 @@ let response;
 }
 
 export default Table;
-
