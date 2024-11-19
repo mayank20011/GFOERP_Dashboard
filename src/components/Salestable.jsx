@@ -66,7 +66,7 @@ function Table() {
             {
               const quantityobj=row[key];
               const quantitykeys=Object.keys(row[key]);
-              for(let k=0;k<quantitykeys.length;k++)
+              for(let k=0;k<quantitykeys.length-1;k++)
                 {
                   const qkey=quantitykeys[k];
                   rowcells.push(<td key={qkey} className="p-1 border text-sm border-black">
