@@ -24,10 +24,7 @@ let response;
     .then((response)=>
       {
         setLoading(false);
-        // setData(response.data.data);
-        console.log(response.data);
-        console.log(response.data.data);
-        console.log(dataa);
+        console.log(response);
       })
     .catch((err)=>{
       console.error("Error fetching data:", err);
