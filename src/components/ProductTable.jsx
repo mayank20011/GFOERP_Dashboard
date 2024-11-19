@@ -68,6 +68,7 @@ let response;
       try {
          response = await axios.get("https://gfoerp-mern-api.vercel.app/Purchase/");
         setData(response.data);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
