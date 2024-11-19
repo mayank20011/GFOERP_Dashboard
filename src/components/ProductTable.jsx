@@ -23,8 +23,8 @@ let response;
     axios.get("https://gfoerp-mern-api.vercel.app/Purchase/")
     .then((response)=>
       {
-        setData(response.data);
         setLoading(false);
+        setData(response.data);
         console.log(`Api response is: ${response} and data is ${response.data} and dataa variable is ${dataa}`);
         console.log(response);
         console.log(response.data);
