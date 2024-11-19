@@ -24,7 +24,7 @@ let response;
     .then((response)=>
       {
         setLoading(false);
-        setData(response.data);
+        setData(response.data.data);
         console.log(`Api response is: ${response} and data is ${response.data} and dataa variable is ${dataa}`);
         console.log(response);
         console.log(response.data);
