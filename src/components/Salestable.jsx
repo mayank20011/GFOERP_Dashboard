@@ -54,7 +54,8 @@ function Table() {
       const objKeys = Object.keys(row);
       const rowcells=[];
       for(let j=0;j<objKeys.length;j++)
-        {
+        { 
+          const key=objKeys[j];
           if(j>0 && j<4)
           {
              rowcells.push(<td key={key} className="p-1 border text-sm border-black">
