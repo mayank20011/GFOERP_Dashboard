@@ -1,0 +1,68 @@
+const dataArray = [
+  {
+    "Client Name": "Client 1",
+    "Date of Order": "2024-11-01",
+    "Date of dispatch and Time": "2024-11-02T09:00",
+    "Full Cream (500ml)": 10,
+    "Full Cream (400ml)": 5,
+    "Toned Milk (500ml)": 20,
+    "Toned Milk (400ml)": 15,
+    "DTM (500ml)": 8,
+    "DTM (400ml)": 12,
+    "DTM Bacha(170ml)": 6,
+    "Family Pack (450ml)": 3,
+    "Cow Milk (500ml)": 18,
+    "Cow Milk (350ml)": 7,
+    "Buffalo Milk (1L)": 10,
+    "Buffalo Milk (500ml)": 14,
+    "Dahi lite (400grm)": 5,
+    "Dahi lite (160grm)": 3,
+    "Plain Chach (300ml)": 8,
+    "Masala Chach (300)": 4
+  },
+  {
+    "Client Name": "Client 2",
+    "Date of Order": "2024-11-02",
+    "Date of dispatch and Time": "2024-11-03T10:30",
+    "Full Cream (500ml)": 12,
+    "Full Cream (400ml)": 7,
+    "Toned Milk (500ml)": 18,
+    "Toned Milk (400ml)": 11,
+    "DTM (500ml)": 9,
+    "DTM (400ml)": 10,
+    "DTM Bacha(170ml)": 5,
+    "Family Pack (450ml)": 4,
+    "Cow Milk (500ml)": 16,
+    "Cow Milk (350ml)": 8,
+    "Buffalo Milk (1L)": 9,
+    "Buffalo Milk (500ml)": 13,
+    "Dahi lite (400grm)": 4,
+    "Dahi lite (160grm)": 2,
+    "Plain Chach (300ml)": 6,
+    "Masala Chach (300)": 3
+  },
+  // ... Repeat similarly for 18 more objects
+  {
+    "Client Name": "Client 20",
+    "Date of Order": "2024-11-20",
+    "Date of dispatch and Time": "2024-11-21T15:00",
+    "Full Cream (500ml)": 20,
+    "Full Cream (400ml)": 10,
+    "Toned Milk (500ml)": 25,
+    "Toned Milk (400ml)": 18,
+    "DTM (500ml)": 12,
+    "DTM (400ml)": 14,
+    "DTM Bacha(170ml)": 9,
+    "Family Pack (450ml)": 7,
+    "Cow Milk (500ml)": 22,
+    "Cow Milk (350ml)": 12,
+    "Buffalo Milk (1L)": 15,
+    "Buffalo Milk (500ml)": 17,
+    "Dahi lite (400grm)": 6,
+    "Dahi lite (160grm)": 4,
+    "Plain Chach (300ml)": 10,
+    "Masala Chach (300)": 5
+  }
+];
+
+export default dataArray;

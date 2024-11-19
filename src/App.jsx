@@ -1,22 +1,35 @@
 import { useState } from 'react'
-import Table from './components/table'
+import ProductTable from "./components/ProductTable.jsx"
+import Salestable from "./components/Salestable";
 function App() {
 
   const [table, setTable] = useState('Purchase')
-
+  function showPurchaseTable(e)
+  {
+    setTable('Purchase');
+  }
+  function showSalesTable(e)
+  {
+    setTable('Sales');
+  }
   return (
     <div className="container grid gap-12 py-12 w-100 mx-auto">
         <h1 className="text-5xl bg-bold text-center">Dashboard</h1>
-        <div className="container h-screen w-100 flex">
+        <div className="container w-100 flex flex-col space-y-12">
           <div>
-             <ul className="grid gap-4">
-              <li className="text-2xl p-5 font-bold border-2 text-center rounded-lg hover:scale-90 transition duration-300 cursor-pointer text-white bg-blue-600 shadow-sm shadow-black">Purchase Table</li>
+             <ul className="flex space-x-4">
+              <li className="text-md p-2 font-bold border-2 text-center rounded-lg hover:scale-90 transition duration-300 cursor-pointer text-white bg-blue-600 shadow-sm shadow-black w-fit" onClick={showPurchaseTable}>Purchase Table</li>
 
-              <li className="text-2xl p-5 font-bold border-2 text-center rounded-lg hover:scale-90 transition duration-300 cursor-pointer text-white bg-blue-600 shadow-sm shadow-black">Sales Table</li>
+              <li className="text-md p-2 font-bold border-2 text-center rounded-lg hover:scale-90 transition duration-300 cursor-pointer text-white bg-blue-600 shadow-sm shadow-black w-fit" onClick={showSalesTable}>Sales Table</li>
+
+              <input type="text" name="name" placeholder="Search by client Name" className="border px-2 rounded-md border-black"/>
+              
+              <input type="date" className="border px-2 rounded-md border-black"/>
+
              </ul>
           </div>
-          <div className="px-12 overflow-x-auto">
-            <Table/>
+          <div className="overflow-x-auto">
+            {table === 'Purchase'? <ProductTable/>:<Salestable/>}
           </div>
         </div>
     </div> 
