@@ -29,58 +29,70 @@ function Table() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const tableRows=[];
+  const tableRows = [];
 
   useEffect(() => {
-    axios
-      .get("https://gfoerp-mern-api.vercel.app/Sales/")
-      .then((response) => {
-        console.log(response.data.data);
-        setData(response.data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const fetchData = () => {
+      axios
+        .get("https://gfoerp-mern-api.vercel.app/Sales/")
+        .then((response) => {
+          console.log(response.data.data);
+          setData(response.data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    // Fetch data initially
+    fetchData();
+    // Set up interval to fetch data every 10 seconds
+    const interval = setInterval(fetchData, 10000);
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
   }, []);
-    
+
   if (loading) {
     return <h1>Loading...</h1>;
   }
 
-  for(let i=data.length-1;i>=0;i--)
-    {
-      const row=data[i];
-      const objKeys = Object.keys(row);
-      const rowcells=[];
-      for(let j=0;j<objKeys.length;j++)
-        { 
-          const key=objKeys[j];
-          if(j>0 && j<4)
-          {
-             rowcells.push(<td key={key} className="p-1 border text-sm border-black">
-              {row[key]}
-            </td>)
-          }
-          else if(j==4)
-            {
-              const quantityobj=row[key];
-              const quantitykeys=Object.keys(row[key]);
-              for(let k=0;k<quantitykeys.length-1;k++)
-                {
-                  const qkey=quantitykeys[k];
-                  rowcells.push(<td key={qkey} className="p-1 border text-sm border-black">
-                    {quantityobj[qkey]}
-                  </td>)
-                }
-            }
-            else
-            {
-              continue;
-            }
+  for (let i = data.length - 1; i >= 0; i--) {
+    const row = data[i];
+    const objKeys = Object.keys(row);
+    const rowcells = [];
+    for (let j = 0; j < objKeys.length; j++) {
+      const key = objKeys[j];
+      if (j > 0 && j < 4) {
+        rowcells.push(
+          <td key={key} className="p-1 border text-sm border-black">
+            {row[key]}
+          </td>
+        );
+      } else if (j == 4) {
+        const quantityobj = row[key];
+        const quantitykeys = Object.keys(row[key]);
+        for (let k = 0; k < quantitykeys.length - 1; k++) {
+          const qkey = quantitykeys[k];
+          rowcells.push(
+            <td key={qkey} className="p-1 border text-sm border-black">
+              {quantityobj[qkey]}
+            </td>
+          );
         }
-        tableRows.push( <tr key={i} className={i % 2 === 0 ? 'text-center bg-slate-200' : 'text-center'}> {rowcells} </tr>);
+      } else {
+        continue;
+      }
     }
+    tableRows.push(
+      <tr
+        key={i}
+        className={i % 2 === 0 ? "text-center bg-slate-200" : "text-center"}
+      >
+        {" "}
+        {rowcells}{" "}
+      </tr>
+    );
+  }
 
   return (
     <table className="table-fixed">
@@ -97,26 +109,7 @@ function Table() {
           ))}
         </tr>
       </thead>
-      <tbody>
-        {tableRows}
-        {/* {data.map((row, index) => {
-          const objKeys = Object.keys(row);
-          return (
-            <tr
-              key={index}
-              className={
-                index % 2 == 0 ? "text-center bg-slate-200" : "text-center"
-              }
-            >
-              {objKeys.map((key,index) => (
-                <td key={key} className="p-1 border text-sm border-black">
-                  {row[key]}
-                </td>
-              ))}
-            </tr>
-          );
-        })} */}
-      </tbody>
+      <tbody>{tableRows}</tbody>
     </table>
   );
 }
