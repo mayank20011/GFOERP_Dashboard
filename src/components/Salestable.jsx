@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 
 import { useState, useEffect } from "react";
+import FilterContainer from "./FilterContainer";
 
 const tableHeading = [
   "Client Name",
@@ -95,6 +96,8 @@ function Table() {
   }
 
   return (
+    <div className="space-y-4">
+      <FilterContainer/>
     <table className="table-fixed">
       <thead>
         <tr>
@@ -111,6 +114,7 @@ function Table() {
       </thead>
       <tbody>{tableRows}</tbody>
     </table>
+    </div>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import FilterContainer from "./FilterContainer";
 
 const tableHeading = [
   "Client Name",
@@ -39,46 +40,48 @@ function Table() {
     return () => clearInterval(interval);
   }, []);
 
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <table className="table-fixed">
-      <thead>
-        <tr>
-          {tableHeading.map((heading) => (
-            <th className="p-4 border border-black" key={heading}>
-              {heading}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {dataa.map((row, index) => {
-          const objKeys = Object.keys(row);
-          return (
-            <tr
-              key={index}
-              className={
-                index % 2 === 0 ? "text-center bg-slate-200" : "text-center"
-              }
-            >
-              {objKeys.map((key, index) =>
-                index === 0 || index === 10 ? (
-                  ""
-                ) : (
-                  <td key={key} className="p-4 border border-black">
-                    {row[key]}
-                  </td>
-                )
-              )}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <div className="space-y-4">
+      <FilterContainer/>
+      <table className="table-fixed">
+        <thead>
+          <tr>
+            {tableHeading.map((heading) => (
+              <th className="p-4 border border-black" key={heading}>
+                {heading}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {dataa.map((row, index) => {
+            const objKeys = Object.keys(row);
+            return (
+              <tr
+                key={index}
+                className={
+                  index % 2 === 0 ? "text-center bg-slate-200" : "text-center"
+                }
+              >
+                {objKeys.map((key, index) =>
+                  index === 0 || index === 10 ? (
+                    ""
+                  ) : (
+                    <td key={key} className="p-4 border border-black">
+                      {row[key]}
+                    </td>
+                  )
+                )}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

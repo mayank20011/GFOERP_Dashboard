@@ -22,10 +22,6 @@ function App() {
 
               <li className="text-md p-2 font-bold border-2 text-center rounded-lg hover:scale-90 transition duration-300 cursor-pointer text-white bg-blue-600 shadow-sm shadow-black w-fit" onClick={showSalesTable}>Sales Table</li>
 
-              <input type="text" name="name" placeholder="Search by client Name" className="border px-2 rounded-md border-black"/>
-              
-              <input type="date" className="border px-2 rounded-md border-black"/>
-
              </ul>
           </div>
           <div className="overflow-x-auto">
