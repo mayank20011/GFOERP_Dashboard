@@ -24,7 +24,7 @@ let response;
     .then((response)=>
       {
         setLoading(false);
-        console.log(response);
+        console.log(response.data.data);
       })
     .catch((err)=>{
       console.error("Error fetching data:", err);
