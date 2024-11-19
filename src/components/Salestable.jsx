@@ -1,5 +1,6 @@
 import React from "react";
-import dataArray from "./Salesdataraw.js";
+import axios from "axios";
+
 import { useState, useEffect } from "react";
 
 const tableHeading = [
@@ -28,6 +29,8 @@ function Table() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const tableRows=[];
+
   useEffect(() => {
     axios
       .get("https://gfoerp-mern-api.vercel.app/Sales/")
@@ -40,10 +43,43 @@ function Table() {
         console.log(err);
       });
   }, []);
-
+    
   if (loading) {
     return <h1>Loading...</h1>;
   }
+
+  for(let i=data.length-1;i>=0;i--)
+    {
+      const row=data[i];
+      const objKeys = Object.keys(row);
+      const rowcells=[];
+      for(let j=0;j<objKeys.length;j++)
+        {
+          if(j>0 && j<4)
+          {
+             rowcells.push(<td key={key} className="p-1 border text-sm border-black">
+              {row[key]}
+            </td>)
+          }
+          else if(j==4)
+            {
+              const quantityobj=row[key];
+              const quantitykeys=Object.keys(row[key]);
+              for(let k=0;k<quantitykeys.length;k++)
+                {
+                  const qkey=quantitykeys[k];
+                  rowcells.push(<td key={qkey} className="p-1 border text-sm border-black">
+                    {quantityobj[qkey]}
+                  </td>)
+                }
+            }
+            else
+            {
+              continue;
+            }
+        }
+        tableRows.push( <tr key={i} className={i % 2 === 0 ? 'text-center bg-slate-200' : 'text-center'}> {rowcells} </tr>);
+    }
 
   return (
     <table className="table-fixed">
@@ -61,7 +97,8 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((row, index) => {
+        {tableRows}
+        {/* {data.map((row, index) => {
           const objKeys = Object.keys(row);
           return (
             <tr
@@ -77,7 +114,7 @@ function Table() {
               ))}
             </tr>
           );
-        })}
+        })} */}
       </tbody>
     </table>
   );
