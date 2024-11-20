@@ -14,10 +14,16 @@ const tableHeading = [
   "What To Do",
 ];
 
-function Table() {
+function Table({table, handleFilterSubmit, filteredPurchaseData}) {
+
   const [dataa, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+   if(filteredPurchaseData)
+    {
+      setData(dataa);
+    }
+    
   useEffect(() => {
     const fetchData = () => {
       axios
@@ -40,13 +46,15 @@ function Table() {
     return () => clearInterval(interval);
   }, []);
 
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="space-y-4">
-      <FilterContainer/>
+      <FilterContainer table={table} handleFilterSubmit={handleFilterSubmit}/>
+      <h1 className="text-2xl bold">ProductTable</h1>
       <table className="table-fixed">
         <thead>
           <tr>

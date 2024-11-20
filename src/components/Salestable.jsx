@@ -26,10 +26,12 @@ const tableHeading = [
   "Masala Chach (300)",
 ];
 
-function Table() {
+function Table({ table, handleFilterSubmit, filteredSalesData }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  if (filteredSalesData) {
+    setData(filteredSalesData);
+  }
   const tableRows = [];
 
   useEffect(() => {
@@ -37,7 +39,7 @@ function Table() {
       axios
         .get("https://gfoerp-mern-api.vercel.app/Sales/")
         .then((response) => {
-          console.log(response.data.data);
+          // console.log(response.data.data);
           setData(response.data.data);
           setLoading(false);
         })
@@ -89,31 +91,31 @@ function Table() {
         key={i}
         className={i % 2 === 0 ? "text-center bg-slate-200" : "text-center"}
       >
-        {" "}
-        {rowcells}{" "}
+        {rowcells}
       </tr>
     );
   }
 
   return (
     <div className="space-y-4">
-      <FilterContainer/>
-    <table className="table-fixed">
-      <thead>
-        <tr>
-          {tableHeading.map((data) => (
-            <th
-              className="p-1 border border-black text-sm"
-              key={data}
-              style={{ minWidth: "100px" }}
-            >
-              {data}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>{tableRows}</tbody>
-    </table>
+      <FilterContainer table={table} handleFilterSubmit={handleFilterSubmit} />
+      <h1 className="text-2xl bold">SalesTable</h1>
+      <table className="table-fixed">
+        <thead>
+          <tr>
+            {tableHeading.map((data) => (
+              <th
+                className="p-1 border border-black text-sm"
+                key={data}
+                style={{ minWidth: "100px" }}
+              >
+                {data}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{tableRows}</tbody>
+      </table>
     </div>
   );
 }
