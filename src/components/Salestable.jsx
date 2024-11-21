@@ -26,34 +26,36 @@ const tableHeading = [
   "Masala Chach (300)",
 ];
 
-function Table({ table, handleFilterSubmit, filteredSalesData }) {
+function Table({ table, handleFilterSubmit, filteredSalesData, setFilteredSalesData }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  if (filteredSalesData) {
-    setData(filteredSalesData);
-  }
+
   const tableRows = [];
 
   useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("https://gfoerp-mern-api.vercel.app/Sales/")
-        .then((response) => {
-          // console.log(response.data.data);
-          setData(response.data.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if(filteredSalesData)
+      {
+        setData(filteredSalesData);
+      }
+    else{const fetchData = () => {
+        axios
+          .get("https://gfoerp-mern-api.vercel.app/Sales/")
+          .then((response) => {
+            // console.log(response.data.data);
+            setData(response.data.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     };
     // Fetch data initially
     fetchData();
     // Set up interval to fetch data every 10 seconds
     const interval = setInterval(fetchData, 10000);
     // Clean up interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval);}
+  }, [filteredSalesData]);
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -98,7 +100,7 @@ function Table({ table, handleFilterSubmit, filteredSalesData }) {
 
   return (
     <div className="space-y-4">
-      <FilterContainer table={table} handleFilterSubmit={handleFilterSubmit} />
+      {/* <FilterContainer handleFilterSubmit={handleFilterSubmit} setFilteredSalesData={setFilteredSalesData}/> */}
       <h1 className="text-2xl bold">SalesTable</h1>
       <table className="table-fixed">
         <thead>

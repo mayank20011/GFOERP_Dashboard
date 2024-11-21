@@ -14,38 +14,43 @@ const tableHeading = [
   "What To Do",
 ];
 
-function Table({table, handleFilterSubmit, filteredPurchaseData}) {
-
+function Table({ table, handleFilterSubmit, filteredPurchaseData, setFilterPurchaseData }) {
   const [dataa, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   if(filteredPurchaseData)
-    {
-      setData(dataa);
-    }
-    
-  useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("https://gfoerp-mern-api.vercel.app/Purchase/")
-        .then((response) => {
-          setLoading(false);
-          setData(response.data.data);
-          // console.log("API response data: ", response.data.data);
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.error("Error fetching data:", err);
-        });
-    };
-    // Fetch data initially
-    fetchData();
-    // Set up interval to fetch data every 10 seconds
-    const interval = setInterval(fetchData, 10000);
-    // Clean up interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
+  // console.log('Table rerendered')
+  // console.log(filteredPurchaseData);
 
+  // useEffect(()=>{
+  //   // console.log(`useEffect run`);
+  //     setData(filteredPurchaseData);
+  // },[filteredPurchaseData]);
+
+  useEffect(() => {
+    if(filteredPurchaseData){
+      setData(filteredPurchaseData);
+    }
+    else{
+      const fetchData = () => {
+        axios
+          .get("https://gfoerp-mern-api.vercel.app/Purchase/")
+          .then((response) => {
+            setLoading(false);
+            setData(response.data.data);
+            // console.log("API response data: ", response.data.data);
+          })
+          .catch((err) => {
+            setLoading(false);
+            console.error("Error fetching data:", err);
+          });
+      };
+      // Fetch data initially
+      fetchData();
+      // Set up interval to fetch data every 10 seconds
+      const interval = setInterval(fetchData, 10000);
+      // Clean up interval on component unmount
+      return () => clearInterval(interval);}
+  }, [filteredPurchaseData]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -53,7 +58,7 @@ function Table({table, handleFilterSubmit, filteredPurchaseData}) {
 
   return (
     <div className="space-y-4">
-      <FilterContainer table={table} handleFilterSubmit={handleFilterSubmit}/>
+      {/* <FilterContainer handleFilterSubmit={handleFilterSubmit} setFilterPurchaseData={setFilterPurchaseData}/> */}
       <h1 className="text-2xl bold">ProductTable</h1>
       <table className="table-fixed">
         <thead>

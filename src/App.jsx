@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductTable from "./components/ProductTable.jsx";
 import Salestable from "./components/Salestable";
 import axios from "axios";
+import FilterContainer from "./components/FilterContainer.jsx";
 function App() {
+  // console.log('app rerendered');
   const [table, setTable] = useState("Purchase");
-  const [filteredSalesData, setFilteredSalesData]=useState(null);
-  const [filteredPurchaseData, setFilterPurchaseData]=useState(null);
+  const [filteredSalesData, setFilteredSalesData] = useState(null);
+  const [filteredPurchaseData, setFilterPurchaseData] = useState(null);
 
   function showPurchaseTable(e) {
     setTable("Purchase");
@@ -13,6 +15,11 @@ function App() {
   function showSalesTable(e) {
     setTable("Sales");
   }
+
+  useEffect(() => {
+    console.log("State updated:", filteredPurchaseData);
+    // Logs the new state whenever it updates
+  }, [filteredPurchaseData]);
 
   // for filter data
   function handleFilterSubmit(e) {
@@ -25,34 +32,36 @@ function App() {
       }
     });
     if (table === "Purchase") {
-      if(data.hasOwnProperty('sbd'))
-        {
-          data['timeStamp']=data['sbd'];
-          delete data.sbd;
-        }
-        data=JSON.stringify(data);
+      if (data.hasOwnProperty("sbd")) {
+        data["timeStamp"] = data["sbd"];
+        delete data.sbd;
+      }
+      data = JSON.stringify(data);
       axios
-        .get(`https://gfoerp-mern-api.vercel.app/Purchase/getDataByFilter?data=${data}`)
+        .get(
+          `https://gfoerp-mern-api.vercel.app/Purchase/getDataByFilter?data=${data}`
+        )
         .then((response) => {
           setFilterPurchaseData(response.data.data);
-          console.log(response.data.data);
+          // console.log(filteredPurchaseData);
         })
         .catch((err) => {
           console.log(err);
           alert(`Something Went Wrong ${err}`);
         });
     } else {
-      if(data.hasOwnProperty('sbd'))
-        {
-          data['dateOfOrder']=data['sbd'];
-          delete data.sbd;
-        }
-      data=JSON.stringify(data);
+      if (data.hasOwnProperty("sbd")) {
+        data["dateOfOrder"] = data["sbd"];
+        delete data.sbd;
+      }
+      data = JSON.stringify(data);
       axios
-        .get(`https://gfoerp-mern-api.vercel.app/Sales/getDataByFilter?data=${data}`)
+        .get(
+          `https://gfoerp-mern-api.vercel.app/Sales/getDataByFilter?data=${data}`
+        )
         .then((response) => {
-          setFilteredSalesData(response.data.data)
-          console.log(response.data.data);
+          setFilteredSalesData(response.data.data);
+          // console.log(response.data.data);
         })
         .catch((err) => {
           console.log(err);
@@ -82,8 +91,23 @@ function App() {
             </li>
           </ul>
         </div>
+        <FilterContainer handleFilterSubmit={handleFilterSubmit} setFilteredSalesData={setFilteredSalesData} setFilterPurchaseData={setFilterPurchaseData} />
         <div className="overflow-x-auto">
-          {table === "Purchase" ? <ProductTable table={table} handleFilterSubmit={handleFilterSubmit} filteredSalesData={filteredSalesData}/> : <Salestable table={table} handleFilterSubmit={handleFilterSubmit} filteredPurchaseData={filteredPurchaseData}/>}
+          {table === "Purchase" ? (
+            <ProductTable
+              table={table}
+              handleFilterSubmit={handleFilterSubmit}
+              filteredPurchaseData={filteredPurchaseData}
+              setFilterPurchaseData={setFilterPurchaseData}
+            />
+          ) : (
+            <Salestable
+              table={table}
+              handleFilterSubmit={handleFilterSubmit}
+              filteredSalesData={filteredSalesData}
+              setFilteredSalesData={setFilteredSalesData}
+            />
+          )}
         </div>
       </div>
     </div>
