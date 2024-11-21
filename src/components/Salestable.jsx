@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 
 import { useState, useEffect } from "react";
-import FilterContainer from "./FilterContainer";
 
 const tableHeading = [
   "Client Name",
@@ -26,35 +25,34 @@ const tableHeading = [
   "Masala Chach (300)",
 ];
 
-function Table({ table, handleFilterSubmit, filteredSalesData, setFilteredSalesData }) {
+function Table({ filteredSalesData }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const tableRows = [];
 
   useEffect(() => {
-    if(filteredSalesData)
-      {
-        setData(filteredSalesData);
-      }
-    else{const fetchData = () => {
+    if (filteredSalesData) {
+      setData(filteredSalesData);
+    } else {
+      const fetchData = () => {
         axios
           .get("https://gfoerp-mern-api.vercel.app/Sales/")
           .then((response) => {
-            // console.log(response.data.data);
             setData(response.data.data);
             setLoading(false);
           })
           .catch((err) => {
             console.log(err);
           });
-    };
-    // Fetch data initially
-    fetchData();
-    // Set up interval to fetch data every 10 seconds
-    const interval = setInterval(fetchData, 10000);
-    // Clean up interval on component unmount
-    return () => clearInterval(interval);}
+      };
+      // Fetch data initially
+      fetchData();
+      // Set up interval to fetch data every 10 seconds
+      const interval = setInterval(fetchData, 10000);
+      // Clean up interval on component unmount
+      return () => clearInterval(interval);
+    }
   }, [filteredSalesData]);
 
   if (loading) {
@@ -100,8 +98,7 @@ function Table({ table, handleFilterSubmit, filteredSalesData, setFilteredSalesD
 
   return (
     <div className="space-y-4">
-      {/* <FilterContainer handleFilterSubmit={handleFilterSubmit} setFilteredSalesData={setFilteredSalesData}/> */}
-      <h1 className="text-2xl bold">SalesTable</h1>
+      <h1 className="text-4xl bold text-green-600">SalesTable</h1>
       <table className="table-fixed">
         <thead>
           <tr>

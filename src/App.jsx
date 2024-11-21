@@ -95,17 +95,11 @@ function App() {
         <div className="overflow-x-auto">
           {table === "Purchase" ? (
             <ProductTable
-              table={table}
-              handleFilterSubmit={handleFilterSubmit}
               filteredPurchaseData={filteredPurchaseData}
-              setFilterPurchaseData={setFilterPurchaseData}
             />
           ) : (
             <Salestable
-              table={table}
-              handleFilterSubmit={handleFilterSubmit}
               filteredSalesData={filteredSalesData}
-              setFilteredSalesData={setFilteredSalesData}
             />
           )}
         </div>

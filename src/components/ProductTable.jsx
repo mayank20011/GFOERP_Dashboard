@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import FilterContainer from "./FilterContainer";
 
 const tableHeading = [
   "Client Name",
@@ -14,17 +13,9 @@ const tableHeading = [
   "What To Do",
 ];
 
-function Table({ table, handleFilterSubmit, filteredPurchaseData, setFilterPurchaseData }) {
+function Table({filteredPurchaseData}) {
   const [dataa, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // console.log('Table rerendered')
-  // console.log(filteredPurchaseData);
-
-  // useEffect(()=>{
-  //   // console.log(`useEffect run`);
-  //     setData(filteredPurchaseData);
-  // },[filteredPurchaseData]);
 
   useEffect(() => {
     if(filteredPurchaseData){
@@ -37,7 +28,6 @@ function Table({ table, handleFilterSubmit, filteredPurchaseData, setFilterPurch
           .then((response) => {
             setLoading(false);
             setData(response.data.data);
-            // console.log("API response data: ", response.data.data);
           })
           .catch((err) => {
             setLoading(false);
@@ -58,8 +48,8 @@ function Table({ table, handleFilterSubmit, filteredPurchaseData, setFilterPurch
 
   return (
     <div className="space-y-4">
-      {/* <FilterContainer handleFilterSubmit={handleFilterSubmit} setFilterPurchaseData={setFilterPurchaseData}/> */}
-      <h1 className="text-2xl bold">ProductTable</h1>
+      
+      <h1 className="text-4xl bold text-green-600">PurchaseTable</h1>
       <table className="table-fixed">
         <thead>
           <tr>
